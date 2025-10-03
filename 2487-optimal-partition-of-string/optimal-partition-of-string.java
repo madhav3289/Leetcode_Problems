@@ -1,14 +1,15 @@
 class Solution {
     public int partitionString(String s) {
-        HashSet<Character> set=new HashSet<>();
+        HashMap<Character,Integer> map=new HashMap<>();
         int count=0;
+        int st=0;
         for(int i=0;i<s.length();i++){
             char ch=s.charAt(i);
-            if(set.contains(ch)){
+            if(map.containsKey(ch) && map.get(ch)>=st){
+                st=i;
                 count++;
-                set.clear();
             }
-            set.add(ch);
+            map.put(ch,i);
         }
         return count+1;
     }

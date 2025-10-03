@@ -7,9 +7,7 @@ class Solution {
     }
     public static void helper(int [] nums,int target,List<List<Integer>> ans,List<Integer> temp,int idx){
         if(target==0){
-            if(!ans.contains(temp)){
-                ans.add(new ArrayList<>(temp));
-            }            
+            ans.add(new ArrayList<>(temp));            
             return;
         }
         if(target<0){

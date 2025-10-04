@@ -1,6 +1,6 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        return helper(nums,0,0,Integer.MIN_VALUE);
+        return helper(nums,1,nums[0],nums[0]);
     }
     public static int helper(int [] nums,int idx,int sum,int max){
         if(idx==nums.length){

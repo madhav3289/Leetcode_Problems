@@ -27,11 +27,11 @@ class Solution {
             return dp[i][j];
         }
         int cur=matrix[i][j];
-        int l=helper(matrix,i,j-1,cur,dp);
-        int r=helper(matrix,i,j+1,cur,dp);
-        int d=helper(matrix,i+1,j,cur,dp);
-        int u=helper(matrix,i-1,j,cur,dp);
+        int l=1+helper(matrix,i,j-1,cur,dp);
+        int r=1+helper(matrix,i,j+1,cur,dp);
+        int d=1+helper(matrix,i+1,j,cur,dp);
+        int u=1+helper(matrix,i-1,j,cur,dp);
 
-        return dp[i][j]=1+Math.max(l,Math.max(r,Math.max(d,u)));
+        return dp[i][j]=Math.max(l,Math.max(r,Math.max(d,u)));
     }
 }

@@ -14,13 +14,14 @@ class Solution {
             char temp=s.charAt(hi);
             if(temp!=ch){
                 k--;
-                while(k<0){
-                    char x=s.charAt(lo);
-                    if(x!=ch){
-                        k++;
-                    }
-                    lo++;
+                
+            }
+            while(k<0){
+                char x=s.charAt(lo);
+                if(x!=ch){
+                    k++;
                 }
+                lo++;
             }
             
             max=Math.max(max,hi-lo+1);

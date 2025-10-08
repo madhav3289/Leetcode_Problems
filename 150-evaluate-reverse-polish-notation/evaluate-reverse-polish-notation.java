@@ -13,18 +13,10 @@ class Solution {
                 int num1=st.pop();
                 int num2=st.pop();
                 int res=0;
-                if(s.equals("+")){
-                    res=num1+num2;
-                }
-                else if(s.equals("-")){
-                    res=num2-num1;
-                }
-                else if(s.equals("*")){
-                    res=num1*num2;
-                }
-                else{
-                    res=num2/num1;
-                }
+                if(s.equals("+")) res=num1+num2;
+                else if(s.equals("-")) res=num2-num1;
+                else if(s.equals("*")) res=num1*num2;
+                else res=num2/num1;
                 st.push(res);
             }
             else{

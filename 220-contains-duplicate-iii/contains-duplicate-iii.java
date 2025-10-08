@@ -1,10 +1,10 @@
 class Solution {
     public class Pair{
-        int val;
-        int idx;
-        Pair(int val,int idx){
-            this.val=val;
-            this.idx=idx;
+        int value;
+        int index;
+        Pair(int value,int index){
+            this.value=value;
+            this.index=index;
         }
     }
     public boolean containsNearbyAlmostDuplicate(int[] nums, int indexDiff, int valueDiff) {
@@ -12,32 +12,31 @@ class Solution {
         TreeSet<Pair> set=new TreeSet<>(new Comparator<Pair>(){
             @Override
             public int compare(Pair a,Pair b){
-                if(a.val==b.val){
-                    return a.idx-b.idx;
+                if(a.value==b.value){
+                    return a.index-b.index;
                 }
-                return a.val-b.val;
+                return a.value-b.value;
             }
         });
-
         for(int i=0;i<n;i++){
-            Pair temp=new Pair(nums[i],i);
-            Pair g=set.floor(temp);
-            Pair l=set.ceiling(temp);
-            if(l!=null){
-                int idf=Math.abs(i-l.idx);
-                int vdf=Math.abs(nums[i]-l.val);
-                if(idf<=indexDiff && vdf<=valueDiff){
+            Pair p=new Pair(nums[i],i);
+            Pair floor=set.floor(p);
+            Pair ceil=set.ceiling(p);
+            if(floor!=null){
+                int diff=Math.abs(floor.index-i);
+                int vald=Math.abs(floor.value-nums[i]);
+                if(diff<=indexDiff && vald<=valueDiff){
                     return true;
                 }
             }
-            if(g!=null){
-                int idf=Math.abs(i-g.idx);
-                int vdf=Math.abs(nums[i]-g.val);
-                if(idf<=indexDiff && vdf<=valueDiff){
+            if(ceil!=null){
+                int diff=Math.abs(ceil.index-i);
+                int vald=Math.abs(ceil.value-nums[i]);
+                if(diff<=indexDiff && vald<=valueDiff){
                     return true;
                 }
             }
-            set.add(new Pair(nums[i],i));
+            set.add(p);
             if(i>=indexDiff){
                 set.remove(new Pair(nums[i-indexDiff],i-indexDiff));
             }

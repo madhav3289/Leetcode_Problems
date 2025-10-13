@@ -7,7 +7,6 @@ class Solution {
         if(num>n){
             return 1;
         }
-        
         int count=0;
         for(int i=1;i<=n;i++){
             if(!isUsed[i] && (num%i==0 || i%num==0)){

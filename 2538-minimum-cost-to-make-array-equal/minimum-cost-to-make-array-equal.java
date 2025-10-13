@@ -1,34 +1,32 @@
 class Solution {
     public long minCost(int[] nums, int[] cost) {
+        int lo=0;
         int hi=0;
-        int lo=999999;
         for(int i:nums){
-            hi=Math.max(hi,i);
             lo=Math.min(lo,i);
+            hi=Math.max(hi,i);
         }
-        long ans=Long.MAX_VALUE;
+        long ans=0;
         while(lo<=hi){
             int mid=lo+(hi-lo)/2;
-            long val=findTotalCost(nums,cost,mid);
-            long val2=findTotalCost(nums,cost,mid+1);
-            if(val<val2){
-                ans=val;
+            long mid_c1=calculateCost(nums,cost,mid);
+            long mid_c2=calculateCost(nums,cost,mid+1);
+            ans=Math.min(mid_c1,mid_c2);
+            if(mid_c1<mid_c2){
                 hi=mid-1;
             }
             else{
-                ans=Math.min(ans,val2);
                 lo=mid+1;
             }
         }
         return ans;
     }
-    public static long findTotalCost(int [] nums,int [] cost,int val){
-        long count=0;
+    public static long calculateCost(int [] nums,int [] cost,int mid){
+        long total=0;
         for(int i=0;i<nums.length;i++){
-            int n=Math.abs(val-nums[i]);
-            long c=(long)n*cost[i];
-            count+=c;
+            int val=Math.abs(nums[i]-mid);
+            total+=(long)cost[i]*val;
         }
-        return count;
+        return total;
     }
 }

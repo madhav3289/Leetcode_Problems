@@ -1,35 +1,24 @@
 class Solution {
     public int minDistance(String word1, String word2) {
-        int [][] memo=new int[word1.length()+1][word2.length()+1];
-        for(int [] arr:memo){
-            Arrays.fill(arr,-1);
+        int n=word1.length();
+        int m=word2.length();
+        int [][] dp=new int[n+1][m+1];
+        for(int i=0;i<=n;i++){
+            dp[i][0]=i;
         }
-        return helper(word1,word2,0,0,memo);
-    }
-    public static int helper(String n,String m,int i,int j,int [][] memo){
-        if(i==n.length()){
-            // we can only add character
-            return m.length()-j;
+        for(int j=0;j<=m;j++){
+            dp[0][j]=j;
         }
-        if(j==m.length()){
-            // we can only delete character
-            return n.length()-i;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(word1.charAt(i-1)==word2.charAt(j-1)){
+                    dp[i][j]=dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j]=1+Math.min(dp[i-1][j-1],Math.min(dp[i-1][j],dp[i][j-1]));
+                }
+            }
         }
-        if(memo[i][j]!=-1){
-            return memo[i][j];
-        }
-        int add=0,del=0,rep=0;
-        if(n.charAt(i)==m.charAt(j)){
-            return helper(n,m,i+1,j+1,memo);
-        }
-        else{
-            // we can add a character
-            add=1+helper(n,m,i,j+1,memo);
-            // we can delete a character
-            del=1+helper(n,m,i+1,j,memo);
-            // we can replace a character
-            rep=1+helper(n,m,i+1,j+1,memo);
-        }
-        return memo[i][j]=Math.min(add,Math.min(del,rep));
+        return dp[n][m];
     }
 }

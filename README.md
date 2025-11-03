@@ -5,7 +5,7 @@ Each subfolder corresponds to one problem, including both the problem and code.
 
 ---
 
-## 📘 Contents
+## Contents
 
 - Solutions organized by problem title or ID.  
 - Includes a mix of **Easy**, **Medium**, and **Hard** problems.  
@@ -20,7 +20,7 @@ Each subfolder corresponds to one problem, including both the problem and code.
 
 ---
 
-## 🧠 Goal
+## Goal
 
 To practice and improve **Data Structures and Algorithms (DSA)** by solving daily LeetCode problems and maintaining clean, readable solutions.
 

@@ -1,35 +1,35 @@
 class Solution {
     public int minDistance(String word1, String word2) {
-        int [][] dp=new int[word1.length()][word2.length()];
-        for(int [] arr:dp){
+        int [][] memo=new int[word1.length()+1][word2.length()+1];
+        for(int [] arr:memo){
             Arrays.fill(arr,-1);
         }
-        return helper(word1,word2,0,0,dp);
+        return helper(word1,word2,0,0,memo);
     }
-    public static int helper(String word1,String word2,int idx1,int idx2,int [][] dp){
-        if(idx1==word1.length()){
-            return word2.length()-idx2;
+    public static int helper(String n,String m,int i,int j,int [][] memo){
+        if(i==n.length()){
+            // we can only add character
+            return m.length()-j;
         }
-        if(idx2==word2.length()){
-            return word1.length()-idx1;
+        if(j==m.length()){
+            // we can only delete character
+            return n.length()-i;
         }
-        if(dp[idx1][idx2]!=-1){
-            return dp[idx1][idx2];
+        if(memo[i][j]!=-1){
+            return memo[i][j];
         }
-        int rep=0,del=0,ins=0;
-        if(word1.charAt(idx1)==word2.charAt(idx2)){
-            return helper(word1,word2,idx1+1,idx2+1,dp);
-        }        
-        else{            
-            // we can replace
-            rep=1+helper(word1,word2,idx1+1,idx2+1,dp);
-
-            // we can delete
-            del=1+helper(word1,word2,idx1+1,idx2,dp);            
-
-            // we can insert
-            ins=1+helper(word1,word2,idx1,idx2+1,dp);
+        int add=0,del=0,rep=0;
+        if(n.charAt(i)==m.charAt(j)){
+            return helper(n,m,i+1,j+1,memo);
         }
-        return dp[idx1][idx2]=Math.min(rep,Math.min(del,ins));
+        else{
+            // we can add a character
+            add=1+helper(n,m,i,j+1,memo);
+            // we can delete a character
+            del=1+helper(n,m,i+1,j,memo);
+            // we can replace a character
+            rep=1+helper(n,m,i+1,j+1,memo);
+        }
+        return memo[i][j]=Math.min(add,Math.min(del,rep));
     }
 }

@@ -8,7 +8,7 @@ class Solution {
             }
             if(val>max){
                 max=val;
-            }            
+            }
             if(max>=nums.length-1){
                 return true;
             }

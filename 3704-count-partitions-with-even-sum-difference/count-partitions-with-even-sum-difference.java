@@ -15,7 +15,7 @@ class Solution {
         // [36,26,16,13,6]
         int count=0;
         for(int i=0;i<n-1;i++){
-            if(((right[i]-nums[i])-left[i])%2==0){
+            if((right[i+1]-left[i])%2==0){
                 count++;
             }
         }

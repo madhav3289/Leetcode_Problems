@@ -3,12 +3,12 @@ class Solution {
     static HashMap<Integer,List<Integer>> mapCol;
     public int countCoveredBuildings(int n, int[][] grid) {
         int m=grid.length;
-        // Arrays.sort(grid,(a,b)->{
-        //     if(a[0]==b[0]){
-        //         return a[1]-b[1];
-        //     }
-        //     return a[0]-b[0];
-        // });
+        Arrays.sort(grid,(a,b)->{
+            if(a[0]==b[0]){
+                return a[1]-b[1];
+            }
+            return a[0]-b[0];
+        });
         mapRow=new HashMap<>();
         mapCol=new HashMap<>();
         for(int [] arr:grid){
@@ -28,12 +28,12 @@ class Solution {
                 mapCol.get(arr[1]).add(arr[0]);
             }
         }
-        for(int key:mapRow.keySet()){
-            Collections.sort(mapRow.get(key));
-        }
-        for(int key:mapCol.keySet()){
-            Collections.sort(mapCol.get(key));
-        }
+        // for(int key:mapRow.keySet()){
+        //     Collections.sort(mapRow.get(key));
+        // }
+        // for(int key:mapCol.keySet()){
+        //     Collections.sort(mapCol.get(key));
+        // }
         int count=0;
         for(int [] arr:grid){
             if(isPresent(arr)){

@@ -1,6 +1,7 @@
 class Solution {
     public int numberOfWays(String corridor) {
         int n=corridor.length();
+        // value of count can be in the range (0-2)
         int [][] dp=new int[n][3];
         for(int [] arr:dp){
             Arrays.fill(arr,-1);
@@ -9,12 +10,15 @@ class Solution {
     }
     static int mod=1_000_000_007;
     public static int helper(String corridor,int idx,int curr,int [][] dp){
+        // when we reach the last index check for
         if(idx==corridor.length()){
+            // if current section has 2 seats means we are good to go else return 0
             if(curr==2){
                 return 1;
             }
             return 0;
         }
+        // if this index is already present then we can use memoization
         if(dp[idx][curr]!=-1){
             return dp[idx][curr];
         }

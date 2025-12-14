@@ -18,7 +18,6 @@ class Solution {
             }
             return 0;
         }
-        // if this index is already present then we can use memoization
         if(dp[idx][curr]!=-1){
             return dp[idx][curr];
         }

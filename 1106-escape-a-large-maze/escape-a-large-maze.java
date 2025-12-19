@@ -22,7 +22,6 @@ class Solution {
             Pair p = (Pair) o;
             return row == p.row && col == p.col;
         }
-
         @Override
         public int hashCode() {
             return Objects.hash(row, col);

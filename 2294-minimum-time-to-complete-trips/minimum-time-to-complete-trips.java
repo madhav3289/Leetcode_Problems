@@ -1,12 +1,9 @@
 class Solution {
     public long minimumTime(int[] time, int totalTrips) {
+        Arrays.sort(time);
         int n=time.length;
         long lo=1;
-        long hi=1;
-        for(int i:time){
-            hi=Math.max(hi,i);
-        }
-        hi=hi*(long)totalTrips;
+        long hi=(long)time[n-1]*totalTrips;
         long ans=-1;
         while(lo<=hi){
             long mid=lo+(hi-lo)/2;
@@ -20,15 +17,17 @@ class Solution {
         }
         return ans;
     }
-    public static boolean isPossible(int [] time,int totalTrips,long mid){
-        long total=0;
-        for(int i=0;i<time.length;i++){
-            long val=mid/time[i];
-            total+=val;
-            if(total>=totalTrips){
+    public static boolean isPossible(int [] time,int totalTrips,long expTime){
+        long trips=0;
+        int n=time.length;
+        for(int i=0;i<n;i++){
+            long trip=expTime/(long)time[i];
+            trips+=trip;
+            if(trips>=totalTrips){
                 return true;
             }
         }
-        return total>=totalTrips;
+        return (trips>=totalTrips);
+        
     }
 }

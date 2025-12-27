@@ -56,7 +56,7 @@ class Solution {
                 if(indegree[temp]==0){
                     q.add(temp);
                 }
-                // calculate the time by adding current time and time of parent node
+                // calculate the time for current node by adding prevtime and time of parent node
                 int t=prevTime[e]+time[e];
                 prevTime[temp]=Math.max(prevTime[temp],t);  // take the maximum one..
             }

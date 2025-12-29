@@ -41,9 +41,7 @@ class Solution {
             int col=e[1];
             int time=e[2];
             // mark the time
-            if(timing[row][col]==0 || time<timing[row][col]){
-                timing[row][col]=time;
-            }
+            timing[row][col]=time;
             // add neighbouring elements
             for(int [] dir:direction){
                 int nRow=row+dir[0];

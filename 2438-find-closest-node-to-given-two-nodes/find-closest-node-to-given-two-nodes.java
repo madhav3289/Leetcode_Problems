@@ -19,7 +19,7 @@ class Solution {
         int [] arr1=BFS(node1,n);
         // pass node2 and compute distace of all other nodes from node2
         int [] arr2=BFS(node2,n);
-        // 
+        // resultant index
         int resIdx=-1;
         int mini=Integer.MAX_VALUE;
         for(int i=0;i<n;i++){
@@ -28,7 +28,9 @@ class Solution {
             if(arr1[i]==Integer.MAX_VALUE || arr2[i]==Integer.MAX_VALUE){
                 continue;
             }
+            // find the max distance between two
             int dist=Math.max(arr1[i],arr2[i]);
+            // if the distance is less than mini change the resultant index
             if(dist<mini){
                 mini=dist;
                 resIdx=i;
@@ -47,9 +49,6 @@ class Solution {
         while(!q.isEmpty()){
             // remove
             int e=q.poll();
-            // ignore
-            // mark visited
-            // self-work
             // add neighbours
             for(int i:list.get(e)){
                 if(dist[i]>dist[e]+1){

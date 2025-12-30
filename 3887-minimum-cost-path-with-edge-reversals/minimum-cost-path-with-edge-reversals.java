@@ -21,28 +21,31 @@ class Solution {
         int [] dist=new int[n];
         Arrays.fill(dist,Integer.MAX_VALUE);
         dist[0]=0;
+        // make a priority queue to add pair 
+        // priority should be based on cost/weight!!
         PriorityQueue<Pair> pq=new PriorityQueue<>((a,b)->a.cost-b.cost);
         pq.add(new Pair(0,0));
         while(!pq.isEmpty()){
             // remove
             Pair e=pq.poll();
-            // ignore
-            // mark visited
             // self-work
             if(e.vtx==n-1){
-                break;
+                break;      // we have reach the last node no need to move further 
             }
             // add neighbours
             for(Pair p:list.get(e.vtx)){
                 int d=p.cost+dist[e.vtx];
+                // if distance of current vertex is greater from previous path than through current path we need to replace it..
                 if(dist[p.vtx]>d){
-                    dist[p.vtx]=d;
-                    pq.add(new Pair(p.vtx,d));
+                    dist[p.vtx]=d;      // replace
+                    pq.add(new Pair(p.vtx,d));      // add to priority queue
                 }
             }
         }
+        // if distance at n-1 vertex is integer max value then we can never reach that vertex so return -1 else reture actual value
         return (dist[n-1]==Integer.MAX_VALUE)?-1:dist[n-1];
     }
+    // implement a pair class
     static class Pair{
         int vtx;
         int cost;

@@ -39,6 +39,7 @@ class Solution {
                 }
             }
         }
+        // if the value at destination vertex is min value means we never reach that node so return 0 else return the probability at that node..
         return (vtxProb[des]==Double.MIN_VALUE)?0:vtxProb[des];
     }
     // create a pair class for neighbour vertex with weight(probability).

@@ -37,10 +37,11 @@ class Solution {
                     continue;
                 }
                 int nHealth=healthRem[row][col];
-                // if health becomes equal to 0 then we can't move further so no need to take current column 
+                // if current sell is 1 we decrease the health by 1
                 if(grid.get(nRow).get(nCol)==1){
-                    nHealth--;
+                    nHealth-=1;
                 }
+                // if health becomes equal to 0 then we can't move further so no need to take current column
                 if(nHealth<=0){
                     continue;
                 }

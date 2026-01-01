@@ -30,10 +30,12 @@ class Solution {
         if(src==des){
             return 1;       // if we reach the last node return 1;
         }
+        // if src node is already present in dp directly return it.
         if(dp[src]!=-1){
             return dp[src];
         }
         int count=0;
+        // iterate over all the neighbours of current node(source)
         for(Pair p:list.get(src)){
             int nbr=p.vtx;
             // only if parent vertex has more distance than child vertex
@@ -41,6 +43,7 @@ class Solution {
                 count=(count+DFS(dist,nbr,des,dp))%mod;
             }
         }
+        // store the result in dp and then return
         return dp[src]=count;
     }
     public static int[] dijkstra(int n,int src){

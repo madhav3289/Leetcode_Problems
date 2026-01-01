@@ -18,6 +18,7 @@ class Solution {
         // store the count of every video name in freq map..
         HashMap<String,Integer> freq=new HashMap<>();
         for(int i=0;i<n;i++){
+            // if vtxlevel is equal to given level store the frequency of every video 
             if(vtxLevel[i]==level){
                 for(int j=0;j<watchedVideos.get(i).size();j++){
                     String t=watchedVideos.get(i).get(j);
@@ -28,12 +29,14 @@ class Solution {
         // return the result sort by freq.
         List<String> res=new ArrayList<>(freq.keySet());
         Collections.sort(res,(a,b)->{
+            // if frequency is same sort it alphabatically
             if(freq.get(a)==freq.get(b)){
                 return a.compareTo(b);
             }
+            // else sort by frequency..
             return freq.get(a)-freq.get(b);
         });
-        return res;
+        return res;     // return result..
     }
     public static int[] BFS(int n,int src){
         // to keep a track of levels from source node
@@ -42,7 +45,7 @@ class Solution {
         vtxLevel[src]=0;    // mark the src node as level 0
         // to keep a track of visited elements
         boolean [] visited=new boolean[n];
-        visited[src]=true;
+        visited[src]=true;      //mark source node true
         Queue<Integer> q=new LinkedList<>();
         q.add(src);     // add the source node to queue
         while(!q.isEmpty()){
@@ -54,7 +57,8 @@ class Solution {
                 if(!visited[nbrs]){
                     // mark visited
                     visited[nbrs]=true;
-                    q.add(nbrs);
+                    q.add(nbrs);        // add neighbours to queue
+                    // increase the neighbouring level by 1 from parent node
                     vtxLevel[nbrs]=vtxLevel[e]+1;
                 }
             }

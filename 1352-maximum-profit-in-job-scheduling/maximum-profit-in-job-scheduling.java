@@ -7,7 +7,7 @@ class Solution {
         for(int i=0;i<n;i++){
             nums[i]=new int[]{startTime[i],endTime[i],profit[i]};
         }
-        // sorting logic (sort them on the basis of ending time so it will become easy for us to use binary search to find next valid index..)
+        // sorting logic (sort them on the basis of start time so it will become easy for us to use binary search to find next valid index..)
         Arrays.sort(nums,(a,b)->a[0]-b[0]);
         int [] dp=new int[n];
         Arrays.fill(dp,-1);

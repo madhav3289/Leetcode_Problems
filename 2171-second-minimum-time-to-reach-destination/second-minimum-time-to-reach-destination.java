@@ -35,19 +35,26 @@ class Solution {
             // ignore
             // add neighbours
             for(int nbrs:list.get(u)){
+                // find in which interval the current time lies
                 int div=(timePassed/change);
                 int newTime=0;
+                // if it is even means signal is green, so we are good to go
+                // so, just add the prevtime and time to travel from one node to other
                 if(div%2==0){
                     newTime=timePassed+time;
                 }
+                // if it is odd, means signal is red so we need to wait till it turns green
+                // so wait till next interval ends.
                 else{
                     newTime=(div+1)*change+time;
                 }
+                // if value is less than smallest time replace second smallest by smallest and smallest by current(new time).
                 if(newTime<dist[nbrs][0]){
                     dist[nbrs][1]=dist[nbrs][0];
                     dist[nbrs][0]=newTime;
                     pq.add(new int[]{nbrs,newTime});
                 }
+                // if value is larger than smallest time but less than second smallest just replace the second smallest..
                 else if(newTime>dist[nbrs][0] && newTime<dist[nbrs][1]){
                     dist[nbrs][1]=newTime;
                     pq.add(new int[]{nbrs,newTime});

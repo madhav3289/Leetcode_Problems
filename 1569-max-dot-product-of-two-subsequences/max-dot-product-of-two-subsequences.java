@@ -4,15 +4,15 @@ class Solution {
         int m=nums2.length;
         int [][] dp=new int[n][m];
         for(int [] arr:dp){
-            Arrays.fill(arr,Integer.MIN_VALUE/2);
+            Arrays.fill(arr,-9999999);
         }
         return helper(nums1,nums2,0,0,dp);
     }
     public static int helper(int [] nums1,int [] nums2,int idx1,int idx2,int [][] dp){
         if(idx1>=nums1.length || idx2>=nums2.length){
-            return Integer.MIN_VALUE/2;
+            return -9999999;
         }
-        if(dp[idx1][idx2]!=Integer.MIN_VALUE/2){
+        if(dp[idx1][idx2]!=-9999999){
             return dp[idx1][idx2];
         }
         // include both the index 1 and index2..

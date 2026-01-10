@@ -3,23 +3,24 @@ class Solution {
         int n=nums.length;
         // hashmap to store the lake and index
         HashMap<Integer,Integer> map=new HashMap<>();
-        // min-heap to store the days with no rain
-        TreeSet<Integer> set=new TreeSet<>((a,b)->a-b);
+        // list to store the index of all zeros
+        List<Integer> list=new ArrayList<>();
         // resultant array
         int [] result=new int[n];
         for(int i=0;i<n;i++){
             if(nums[i]==0){
-                set.add(i);
+                list.add(i);
             }
             else{
                 result[i]=-1;
                 if(map.containsKey(nums[i])){
                     int index=map.get(nums[i]);
-                    Integer day=set.ceiling(index+1);
-                    if(day==null){
+                    int val=binarySearch(index,list);
+                    if(val==-1){
                         return new int[0];
                     }
-                    set.remove(day);
+                    int day=list.get(val);
+                    list.remove(val);
                     result[day]=nums[i];
                 }
                 map.put(nums[i],i);
@@ -31,5 +32,21 @@ class Solution {
             }
         }
         return result;
+    }
+    public static int binarySearch(int index,List<Integer> list){
+        int lo=0;
+        int hi=list.size()-1;
+        int res=-1;
+        while(lo<=hi){
+            int mid=lo+(hi-lo)/2;
+            if(list.get(mid)>index){
+                res=mid;
+                hi=mid-1;
+            }
+            else{
+                lo=mid+1;
+            }
+        }
+        return res;
     }
 }

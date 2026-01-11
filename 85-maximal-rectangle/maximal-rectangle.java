@@ -2,55 +2,52 @@ class Solution {
     public int maximalRectangle(char[][] matrix) {
         int n=matrix.length;
         int m=matrix[0].length;
-        int [][] arr=new int[n][m];
-        for(int i=0;i<m;i++){
+        int [][] newMat=new int[n][m];
+        for(int col=0;col<m;col++){
             int count=0;
-            for(int j=0;j<n;j++){
-                if(matrix[j][i]=='1'){
-                    count++;
-                }
-                else{
-                    count=0;
-                }
-                arr[j][i]=count;
+            for(int row=0;row<n;row++){
+                count=(matrix[row][col]=='1')?count+1:0;
+                newMat[row][col]=count;
             }
         }
-        int max=0;
-        for(int i=0;i<n;i++){
-            max=Math.max(max,largestRectangle(arr[i]));
+        int result=0;
+        for(int [] nums:newMat){
+            result=Math.max(result,largestHistogram(nums));
         }
-        return max;
+        return result;
     }
-    public static int largestRectangle(int[] nums) {
-        int [] nse=nextSmaller(nums);
-        int [] pse=prevSmaller(nums);
-        int max=0;
+    public static int largestHistogram(int [] nums){
+        int [] nse=nextSmallerElement(nums);
+        int [] pse=prevSmallerElement(nums);
+        int maxArea=0;
         for(int i=0;i<nums.length;i++){
             int area=(nse[i]-pse[i]-1)*nums[i];
-            max=Math.max(area,max);
+            maxArea=Math.max(maxArea,area);
         }
-        return max;
+        return maxArea;
     }
-    public static int [] nextSmaller(int [] nums){
-        int [] nse=new int[nums.length];
+    public static int[] nextSmallerElement(int [] nums){
+        int n=nums.length;
+        int [] nse=new int[n];
         Stack<Integer> st=new Stack<>();
-        for(int i=nums.length-1;i>=0;i--){
-            while(!st.isEmpty() && nums[st.peek()]>=nums[i]){
+        for(int i=n-1;i>=0;i--){
+            while(!st.isEmpty() && nums[i]<=nums[st.peek()]){
                 st.pop();
             }
-            nse[i]=(st.isEmpty())?nums.length:st.peek();
+            nse[i]=(st.isEmpty())?n:st.peek();
             st.push(i);
         }
         return nse;
     }
-    public static int [] prevSmaller(int [] nums){
-        int [] pse=new int[nums.length];
+    public static int[] prevSmallerElement(int [] nums){
+        int n=nums.length;
+        int [] pse=new int[n];
         Stack<Integer> st=new Stack<>();
-        for(int i=0;i<nums.length;i++){
-            while(!st.isEmpty() && nums[st.peek()]>=nums[i]){
+        for(int i=0;i<n;i++){
+            while(!st.isEmpty() && nums[i]<=nums[st.peek()]){
                 st.pop();
             }
-            pse[i]=(!st.isEmpty())?st.peek():-1;
+            pse[i]=(st.isEmpty())?-1:st.peek();
             st.push(i);
         }
         return pse;

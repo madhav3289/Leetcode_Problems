@@ -3,20 +3,20 @@ class Solution {
         if(n<2){
             return 0;
         }
-        boolean [] arr=new boolean[n+1];
-        Arrays.fill(arr,true);
-        arr[0]=false;
-        arr[1]=false;
-        for(int i=2;i<=n;i++){
-            if(arr[i]==true){
-                for(int j=i+i;j<=n;j+=i){
-                    arr[j]=false;
+        boolean [] visited=new boolean[n];
+        Arrays.fill(visited,true);
+        visited[0]=false;
+        visited[1]=false;
+        for(int i=2;i<n;i++){
+            if(visited[i]){
+                for(int j=2*i;j<n;j+=i){
+                    visited[j]=false;
                 }
             }
         }
         int count=0;
         for(int i=0;i<n;i++){
-            if(arr[i]==true){
+            if(visited[i]){
                 count++;
             }
         }

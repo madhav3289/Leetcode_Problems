@@ -1,6 +1,6 @@
 class Solution {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        int [] nge=nextGreaterElement(nums2);
+        int [] nge=nextGreater(nums2);
         // [3,4,-1,-1]
         int [] res=new int[nums1.length];
         for(int i=0;i<nums1.length;i++){
@@ -8,7 +8,7 @@ class Solution {
         }
         return res;
     }
-    public static int [] nextGreaterElement(int [] nums){
+    public static int [] nextGreater(int [] nums){
         int n=nums.length;
         int [] nge=new int[10000+1];
         Stack<Integer> st=new Stack<>();

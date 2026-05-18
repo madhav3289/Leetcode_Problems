@@ -1,30 +1,27 @@
 class Solution {
-    static int n;
-    static int m;
     public int longestCommonSubsequence(String text1, String text2) {
-        n=text1.length();
-        m=text2.length();
+        int n=text1.length();
+        int m=text2.length();
         int [][] dp=new int[n][m];
         for(int [] arr:dp){
             Arrays.fill(arr,-1);
         }
         return helper(text1,text2,0,0,dp);
     }
-    public static int helper(String text1,String text2,int idx1,int idx2,int [][] dp){
-        if(idx1>=n || idx2>=m){
+    public static int helper(String s,String t,int i,int j,int [][] dp){
+        if(i>=s.length() || j>=t.length()){
             return 0;
         }
-        if(dp[idx1][idx2]!=-1){
-            return dp[idx1][idx2];
+        if(dp[i][j]!=-1){
+            return dp[i][j];
         }
-        int a=0,b=0;
-        if(text1.charAt(idx1)==text2.charAt(idx2)){
-            return 1+helper(text1,text2,idx1+1,idx2+1,dp);
+        int count=0;
+        if(s.charAt(i)==t.charAt(j)){
+            count=1+helper(s,t,i+1,j+1,dp);
         }
-        else{
-            a=helper(text1,text2,idx1+1,idx2,dp);
-            b=helper(text1,text2,idx1,idx2+1,dp);
-        }
-        return dp[idx1][idx2]=Math.max(a,b);
+        int left=helper(s,t,i+1,j,dp);
+        int right=helper(s,t,i,j+1,dp);
+
+        return dp[i][j]=Math.max(count,Math.max(left,right));
     }
 }

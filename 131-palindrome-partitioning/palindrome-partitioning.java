@@ -10,22 +10,21 @@ class Solution {
             return;
         }
         for(int i=idx;i<s.length();i++){
-            if(isPalindrome(s.substring(idx,i+1))){
+            if(isPalindrome(s,idx,i)){
                 temp.add(s.substring(idx,i+1));
                 helper(s,i+1,res,temp);
                 temp.remove(temp.size()-1);
             }
         }
+        
     }
-    public static boolean isPalindrome(String s){
-        int lo=0;
-        int hi=s.length()-1;
-        while(lo<=hi){
-            if(s.charAt(lo)!=s.charAt(hi)){
+    public static boolean isPalindrome(String s,int i,int j){
+        while(i<j){
+            if(s.charAt(i)!=s.charAt(j)){
                 return false;
             }
-            lo++;
-            hi--;
+            i++;
+            j--;
         }
         return true;
     }

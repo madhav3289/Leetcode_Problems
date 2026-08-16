@@ -34,10 +34,8 @@ class Solution {
         int parent=n-(left+right+1);
 
         int maxi=Math.max(parent,Math.max(left,right));
-        if(maxi>n-maxi){
-            return true;
-        }
-        return false;
+        
+        return maxi>n-maxi;
     }
 
     public int calcTotalNodes(TreeNode root){

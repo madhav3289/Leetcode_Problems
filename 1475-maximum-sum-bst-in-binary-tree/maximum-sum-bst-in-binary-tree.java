@@ -16,41 +16,41 @@
 class Solution {
     public int maxSumBST(TreeNode root) {
         maxBST=0;
-        Pair temp=DFS(root);
+        int [] temp=DFS(root);
         return maxBST;
     }
     int maxBST;
 
-    public Pair DFS(TreeNode root){
+    public int[] DFS(TreeNode root){
         if(root==null){
-            return new Pair(true,0,Integer.MAX_VALUE,Integer.MIN_VALUE);
+            return new int[]{1,0,Integer.MAX_VALUE,Integer.MIN_VALUE};
         }
 
-        Pair left=DFS(root.left);
-        Pair right=DFS(root.right);
+        int [] left=DFS(root.left);
+        int [] right=DFS(root.right);
 
-        if(left.isBST && right.isBST && root.val>left.max && root.val<right.min){
-            int sum=left.sum+right.sum+root.val;
+        if(left[0]==1 && right[0]==1 && root.val>left[3] && root.val<right[2]){
+            int sum=left[1]+right[1]+root.val;
             maxBST=Math.max(maxBST,sum);
-            int min=Math.min(root.val,left.min);
-            int max=Math.max(root.val,right.max);
-            return new Pair(true,sum,min,max);
+            int min=Math.min(root.val,left[2]);
+            int max=Math.max(root.val,right[3]);
+            return new int[]{1,sum,min,max};
         }
-        return new Pair(false,Integer.MIN_VALUE,-1,-1);
+        return new int[]{0,Integer.MIN_VALUE,-1,-1};
     }
 
-    public class Pair{
-        boolean isBST;
-        int sum;
-        int min;
-        int max;
+    // public class Pair{
+    //     boolean isBST;
+    //     int sum;
+    //     int min;
+    //     int max;
 
-        Pair(boolean isBST,int sum,int min,int max){
-            this.isBST=isBST;
-            this.sum=sum;
-            this.min=min;
-            this.max=max;
-        }
+    //     Pair(boolean isBST,int sum,int min,int max){
+    //         this.isBST=isBST;
+    //         this.sum=sum;
+    //         this.min=min;
+    //         this.max=max;
+    //     }
 
-    }
+    // }
 }

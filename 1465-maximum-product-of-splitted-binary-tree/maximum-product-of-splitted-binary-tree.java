@@ -14,33 +14,43 @@
  * }
  */
 class Solution {
-    static int mod=1_000_000_007;
-    static long maxProd=0;
-    static long totalSum=0;
     public int maxProduct(TreeNode root) {
+        totalSum=sumSubtree(root);
         maxProd=0;
-        totalSum=treeSum(root);
-        long s1=subTreeSum(root);
+
+        maxProductSubtree(root);
+
         return (int)(maxProd%mod);
+
     }
-    public static long subTreeSum(TreeNode root){
+
+    public long maxProductSubtree(TreeNode root){
         if(root==null){
             return 0;
         }
-        long left=subTreeSum(root.left);
-        long right=subTreeSum(root.right);
-        long s1=left+right+root.val;
-        long s2=totalSum-s1;
-        maxProd=Math.max(maxProd,s1*s2);
-        return s1;
+        long left=maxProductSubtree(root.left);
+        long right=maxProductSubtree(root.right);
+
+        long remLeft=totalSum-left;
+        long remRight=totalSum-right;
+
+        maxProd=Math.max(maxProd,left*remLeft);
+        maxProd=Math.max(maxProd,right*remRight);
+
+        return left+right+(long)root.val;
     }
-    public static long treeSum(TreeNode root){
+
+    long totalSum;
+    long maxProd;
+    int mod=1_000_000_007;
+
+    public long sumSubtree(TreeNode root){
         if(root==null){
             return 0;
         }
-        long leftSum=treeSum(root.left);
-        long rightSum=treeSum(root.right);
-        long sum=leftSum+rightSum+root.val;
-        return sum;
+        long left=sumSubtree(root.left);
+        long right=sumSubtree(root.right);
+
+        return (long)root.val+left+right;
     }
 }

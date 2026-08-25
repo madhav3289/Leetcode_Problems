@@ -1,118 +1,139 @@
 class LFUCache {
 
-    HashMap<Integer,Node> map;
-    TreeMap<Integer,List<Node>> freq;
+    HashMap<Integer,ListNode> map;
+    HashMap<Integer,DLL> freq;
     int maxSize;
     int curSize;
+    int minFreq;
 
     public LFUCache(int capacity) {
-        freq=new TreeMap<>();
         map=new HashMap<>();
+        freq=new HashMap<>();
         maxSize=capacity;
         curSize=0;
+        minFreq=0;
     }
     
     public int get(int key) {
         if(!map.containsKey(key)){
             return -1;
         }
+        ListNode node=map.get(key);
 
-        Node temp=map.get(key);
-        int val=temp.value;
+        updateFreq(node);
 
-        // update existing
-        addNode(key,val);
-
-        removeNode(temp);
-        return val;        
+        return node.value;
     }
     
     public void put(int key, int value) {
-        if(!map.containsKey(key)){
-
-            //check the size
-            if(curSize==maxSize){
-                int c=freq.firstKey();
-                // first node element in least recently used
-                Node n=freq.get(c).get(0).next;
-
-                map.remove(n.key);
-
-                removeNode(n);
-            }
-            else{
-                curSize++;
-            }
-            // add new node
-            addNode(key,value);
-        }
-        else{
-            // update
-            Node n=map.get(key);
-
-            addNode(key,value);
-            removeNode(n);
-        }
-    }
-
-    public void removeNode(Node n){
-        n.prev.next=n.next;
-        n.next.prev=n.prev;
-    
-        // if no key value pair exists for same count except head and tail, remove the key from frequency
-        List<Node> list=freq.get(n.count);
-        Node head=list.get(0);
-        Node tail=list.get(1);
-
-        if(head.next==tail){
-            freq.remove(n.count);
-        }
-        n.next=null;
-        n.prev=null;        
-    }
-
-    public void addNode(int key,int value){
-        int ct=0;
         if(map.containsKey(key)){
-            ct=map.get(key).count;
+            // only need to update the existing values
+            ListNode node=map.get(key);
+            node.value=value;
+
+            updateFreq(node);
+
+            return;
         }
-        ct++;
+        if(maxSize==curSize){
+            DLL list=freq.get(minFreq);
 
-        Node temp=new Node(key,value,ct);
+            ListNode temp=list.removeLast();
+            map.remove(temp.key);
 
-        if(!freq.containsKey(ct)){
-            Node head=new Node(-1,-1,-1);
-            Node tail=new Node(-1,-1,-1);
-
-            head.next=tail;
-            tail.prev=head;
-
-            freq.put(ct,new ArrayList<>(List.of(head,tail)));
+            curSize--;
         }
 
-        Node tail=freq.get(ct).get(1);
+        ListNode node=new ListNode(key,value);
+        map.put(key,node);
 
-        tail.prev.next=temp;
-        temp.prev=tail.prev;
+        minFreq=1;
 
-        temp.next=tail;
-        tail.prev=temp;
+        if(!freq.containsKey(1)){
+            freq.put(1,new DLL());
+        }
+        freq.get(1).addNode(node);
 
-        map.put(key,temp);
+        curSize++;
+    }
+
+    public void updateFreq(ListNode node){
+        int curFreq=node.freq;
+
+        DLL list=freq.get(curFreq);
+        list.removeNode(node);
+
+        if(list.size==0){
+            freq.remove(curFreq);
+            if(minFreq==curFreq){
+                minFreq++;
+            }
+        }
+
+        node.freq++;
+        int newFreq=node.freq;
+
+
+        if(!freq.containsKey(newFreq)){
+            freq.put(newFreq,new DLL());
+        }
+        freq.get(newFreq).addNode(node);        
+
     }
 }
 
-class Node{
+class DLL{
+
+    ListNode head;
+    ListNode tail;
+    int size;
+
+    public DLL(){
+        head=new ListNode(-1,-1);
+        tail=new ListNode(-1,-1);
+        head.next=tail;
+        tail.prev=head;
+        size=0;
+    }
+
+    public void addNode(ListNode node){
+        ListNode nxt=head.next;
+        head.next=node;
+        node.next=nxt;
+        nxt.prev=node;
+        node.prev=head;
+        size++;
+    }
+
+    public void removeNode(ListNode node){
+        node.prev.next=node.next;
+        node.next.prev=node.prev;
+        node.prev=null;
+        node.next=null;
+        size--;
+    }
+
+    public ListNode removeLast(){
+        if(size==0){
+            return null;
+        }
+        ListNode last=tail.prev;
+        removeNode(last);
+        return last;
+    }
+}
+
+class ListNode{
+    ListNode prev;
+    ListNode next;
     int key;
     int value;
-    int count;
-    Node prev;
-    Node next;
+    int freq;
 
-    Node(int key,int value,int count){
+    ListNode(int key,int value){
         this.key=key;
         this.value=value;
-        this.count=count;
+        this.freq=1;
     }
 }
 

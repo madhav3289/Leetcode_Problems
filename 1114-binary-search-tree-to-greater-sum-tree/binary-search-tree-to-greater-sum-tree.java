@@ -14,34 +14,25 @@
  * }
  */
 class Solution {
-    List<TreeNode> prefix;
+    int sum;
+
     public TreeNode bstToGst(TreeNode root) {
-        prefix=new ArrayList<>();
+        sum=0;
         
-        buildArray(root);
-
-        int n=prefix.size();
-
-        int sum=prefix.get(n-1).val;
-
-        for(int i=n-2;i>=0;i--){
-            TreeNode temp=prefix.get(i);
-            temp.val+=sum;
-
-            sum=temp.val;
-        }
+        helper(root);
 
         return root;
     }
-    public void buildArray(TreeNode root){
+    public void helper(TreeNode root){
         if(root==null){
             return;
         }
 
-        buildArray(root.left);
+        helper(root.right);
 
-        prefix.add(root);
+        sum+=root.val;
+        root.val=sum;
 
-        buildArray(root.right);
+        helper(root.left);
     }    
 }

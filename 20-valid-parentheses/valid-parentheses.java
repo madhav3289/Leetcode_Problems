@@ -11,16 +11,18 @@ class Solution {
                 if(st.isEmpty()){
                     return false;
                 }
-                if(ch==')' &&  st.peek()!='('){
+                else if(ch==')' && st.peek()=='('){
+                    st.pop();
+                }
+                else if(ch==']' && st.peek()=='['){
+                    st.pop();
+                }
+                else if(ch=='}' && st.peek()=='{'){
+                    st.pop();
+                }
+                else{
                     return false;
                 }
-                else if(ch==']'  && st.peek()!='['){
-                    return false;
-                }
-                else if(ch=='}'  && st.peek()!='{'){
-                    return false;
-                }
-                st.pop();
             }
         }
         return st.isEmpty();

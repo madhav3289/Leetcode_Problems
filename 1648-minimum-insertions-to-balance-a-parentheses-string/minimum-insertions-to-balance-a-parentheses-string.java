@@ -10,7 +10,7 @@ class Solution {
                 st.push(ch);
             }
             else{
-                if(i+1>=n){
+                if(i+1>=n || s.charAt(i+1)!=')'){
                     if(st.isEmpty()){
                         count+=2;
                     }
@@ -28,16 +28,6 @@ class Solution {
                         st.pop();
                     }
                     i++;
-                }
-
-                else{
-                    if(st.isEmpty()){
-                        count+=2;
-                    }
-                    else{
-                        count+=1;
-                        st.pop();
-                    }
                 }
             }
             i++;
